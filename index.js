@@ -15,7 +15,7 @@ gpiop
   .setup(18, gpio.DIR_IN)
   .then(() => {
     setInterval(() => {
-      gpiop.read(18, (err, value) => {
+      gpio.read(18, (err, value) => {
         if (err) {
           console.log(err);
         }
