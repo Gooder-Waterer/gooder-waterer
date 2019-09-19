@@ -7,23 +7,28 @@ const cache = {
   ons: 0,
   offs: 0,
   lastOn: null,
-  lastOff: null
+  lastOff: null,
+  status: "OFF"
 };
 const app = express();
 
 const pin = gpiop.setup(16, gpio.DIR_OUT);
 
 app.use((req, res, next) => {
-  console.log(`[access] - ${req.method}:${req.url}`);
+  console.log(`[access] - ${req.method}:${req.originalUrl}`);
   return next();
 });
 
 app.get("/on", function(req, res, next) {
   pin
     .then(() => {
-      gpiop.write(16, true);
-      cache.ons += 1;
-      cache.lastOn = new Date().toString();
+      if (cache.status === "OFF") {
+        gpiop.write(16, true);
+        cache.ons += 1;
+        cache.lastOn = new Date().toString();
+        cache.status = "ON";
+      }
+
       res.send();
     })
     .catch(next);
@@ -32,9 +37,13 @@ app.get("/on", function(req, res, next) {
 app.get("/off", function(req, res, next) {
   pin
     .then(() => {
-      gpiop.write(16, false);
-      cache.offs += 1;
-      cache.lastOff = new Date().toString();
+      if (cache.status === "ON") {
+        gpiop.write(16, false);
+        cache.offs += 1;
+        cache.lastOff = new Date().toString();
+        cache.status = "OFF";
+      }
+
       res.send();
     })
     .catch(next);
