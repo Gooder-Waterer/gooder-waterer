@@ -13,6 +13,11 @@ const app = express();
 
 const pin = gpiop.setup(16, gpio.DIR_OUT);
 
+app.use((req, res, next) => {
+  console.log(`[access] - ${req.method}:${req.url}`);
+  return next();
+});
+
 app.get("/on", function(req, res, next) {
   pin
     .then(() => {
