@@ -1,8 +1,7 @@
-const express = require("express");
 const gpio = require("rpi-gpio");
+const express = require("express");
 const gpiop = gpio.promise;
 
-const express = require("express");
 const app = express();
 
 const pin = gpiop.setup(16, gpio.DIR_OUT);
