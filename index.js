@@ -11,7 +11,7 @@ const gpiop = gpio.promise;
 //   });
 
 gpiop
-  .setup(18, gpio.DIR_OUT)
+  .setup(18, gpio.DIR_IN)
   .then(() => {
     setInterval(() => {
       gpiop.read(18, value => {
