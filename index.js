@@ -28,7 +28,7 @@ app.get("/off", function(req, res, next) {
   pin
     .then(() => {
       gpiop.write(16, false);
-      cache.ons += 1;
+      cache.offs += 1;
       cache.lastOff = new Date().toString();
       res.send();
     })
