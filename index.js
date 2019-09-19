@@ -1,28 +1,22 @@
+const express = require("express");
 const gpio = require("rpi-gpio");
 const gpiop = gpio.promise;
 
-console.log("\ngooder waterer - here we go... \n");
-// gpiop
-//   .setup(16, gpio.DIR_OUT)
-//   .then(() => {
-//     return gpiop.write(16, false);
-//   })
-//   .catch(err => {
-//     console.log("Error: ", err.toString());
-//   });
+const express = require("express");
+const app = express();
 
-gpiop
-  .setup(18, gpio.DIR_IN)
-  .then(() => {
-    setInterval(() => {
-      gpio.read(18, (err, value) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log(`\nThe value is: ${value}`);
-      });
-    }, 2000);
-  })
-  .catch(err => {
-    console.log("Error: ", err.toString());
-  });
+const pin = gpiop.setup(16, gpio.DIR_OUT);
+
+app.get("/on", function(req, res) {
+  res.send("Hello World");
+  pin.then(() => gpiop.write(16, true));
+  res.send();
+});
+
+app.get("/off", function(req, res) {
+  res.send("Hello World");
+  pin.then(() => gpiop.write(16, false));
+  res.send();
+});
+
+app.listen(3000);
