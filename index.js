@@ -1,6 +1,7 @@
 const gpio = require("rpi-gpio");
 const gpiop = gpio.promise;
 
+console.log("\ngooder waterer - here we go... \n");
 // gpiop
 //   .setup(16, gpio.DIR_OUT)
 //   .then(() => {
@@ -14,8 +15,11 @@ gpiop
   .setup(18, gpio.DIR_IN)
   .then(() => {
     setInterval(() => {
-      gpiop.read(18, value => {
-        console.log(value);
+      gpiop.read(18, (err, value) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(`\nThe value is: ${value}`);
       });
     }, 2000);
   })
