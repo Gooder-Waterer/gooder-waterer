@@ -55,7 +55,7 @@ const sleep = (ms) => {
 
 app.get("/strobe", function(req, res, next) {
   pin
-    .then(() => {
+    .then(async () => {
       var status = cache.status === "ON";
       for (var i = 0; i < 9; i++) {
         await sleep(500);
