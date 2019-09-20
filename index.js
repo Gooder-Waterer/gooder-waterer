@@ -54,7 +54,7 @@ app.get("/strobe", function(req, res, next) {
     .then(async () => {
       var status = cache.status === "ON";
       for (var i = 0; i < 9; i++) {
-        await new Promise(resolve => setTimeout(resolve, ms));
+        await new Promise(resolve => setTimeout(resolve, 500));
         status = !status;
         gpiop.write(16, status);
       }
