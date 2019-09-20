@@ -49,6 +49,25 @@ app.get("/off", function(req, res, next) {
     .catch(next);
 });
 
+app.get("/strobe", function(req, res, next) {
+  pin
+    .then(() => {
+      var status = cache.status === "ON";
+      for (var i = 0, i < 9, i++) {
+        setTimeout(() => {
+          status = !status;
+          gpiop.write(16, status);
+        }, 500)
+      }
+
+      // always finish in off state
+      gpiop.write(16, false);
+
+      res.send();
+    })
+    .catch(next);
+})
+
 app.get("/stats", (req, res, next) => {
   res.send(cache);
 });
