@@ -53,10 +53,10 @@ app.get("/strobe", function(req, res, next) {
   pin
     .then(() => {
       var status = cache.status === "ON";
-      for (var i = 0, i < 9, i++) {
+      var i = 0;
+      for (i; i < 9; i++) {
         setTimeout(() => {
-          status = !status;
-          gpiop.write(16, status);
+          console.log('hit')
         }, 500)
       }
 
