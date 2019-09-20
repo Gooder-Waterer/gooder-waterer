@@ -49,16 +49,12 @@ app.get("/off", function(req, res, next) {
     .catch(next);
 });
 
-const sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 app.get("/strobe", function(req, res, next) {
   pin
     .then(async () => {
       var status = cache.status === "ON";
       for (var i = 0; i < 9; i++) {
-        await sleep(500);
+        await new Promise(resolve => setTimeout(resolve, ms));
         status = !status;
         gpiop.write(16, status);
       }
